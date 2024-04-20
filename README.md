@@ -4,7 +4,7 @@
   
 `docker compose up -d`
 
-<h2> seed admin<h2>
+<h2> seed admin</h2>
 
 `docker compose exec app node ./seeders/admin.seeder.js`
 
