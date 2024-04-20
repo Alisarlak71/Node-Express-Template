@@ -1,6 +1,8 @@
 <h1> Nodejs - Express - MongoDB <h1>
 <h2> Installation </h2>
+  
 `cp .env.example .env`
+  
 `docker compose up -d`
 
 <h2> seed admin<h2>
