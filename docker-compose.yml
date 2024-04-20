@@ -2,20 +2,14 @@
 version: '3'
 
 services:
-  mongod:
-    image: mongo
-    restart: always
-    environment:
-      MONGO_INITDB_DATABASE: ${DB_DATABASE}
-      MONGO_INITDB_ROOT_PASSWORD: ${DB_PASSWORD}
-      MONGO_INITDB_ROOT_USERNAME: ${DB_USER}
-    volumes:
-      - ./docker/data/mongod:/root/data
-      - ./docker/logs/mongod:/root/logs
-      - ./docker/mongo/mongod.conf:/etc/mongod.conf
-    entrypoint: ["mongod","--config","/etc/mongod.conf"]
+  mongodb:
+    image: mongo:7.0.9-rc0
     ports:
-      - 27017:27017
+      - '27017:27017'
+    volumes:
+      - ./docker/mongo:/data/db
+    networks:
+      - node-network
   app:
       build: .
       image: node_backend
@@ -26,4 +20,10 @@ services:
       ports:
         - ${APP_EXPOSED_PORT:-0}:3000
       depends_on:
-        - mongod
+        - mongodb
+      networks:
+        - node-network
+
+networks:
+  node-network:
+    driver: bridge

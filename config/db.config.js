@@ -10,13 +10,9 @@ module.exports = {
 
 const mongoose = require("mongoose");
 
-const MONGO_URI = `mongodb://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_DATABASE}`;
+const MONGO_URI = `mongodb://${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_DATABASE}`;
 console.log(MONGO_URI);
-mongoose
-  .connect(MONGO_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
+mongoose.connect(MONGO_URI)
   .then(() => {
     console.log("DB Connected");
   })

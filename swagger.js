@@ -18,6 +18,10 @@ const options = {
     ],
     tags: [
       {
+        name: "Authentication",
+        description: "احراز هویت کاربران",
+      },
+      {
         name: "Users",
         description: "مدیریت کاربران",
       },
