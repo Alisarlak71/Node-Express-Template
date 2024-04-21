@@ -7,6 +7,8 @@ const {
   destroy,
 } = require("../../controllers/user.controller");
 
+const { body } = require("express-validator");
+
 const authMiddleware = require("../../middlewares/auth.middleware");
 /**
  * @swagger
@@ -74,8 +76,26 @@ router.get("/", authMiddleware, index);
  *     responses:
  *       200:
  *         description: پاسخ موفق
+ *       422:
+ *         description: مقادیر ورودی اشتباه
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 errors:
+ *                   type: array
+ *                   example: [{ "type": "field","msg": "Invalid value","path": "first_name", "location": "body"}]
  */
-router.post("/", authMiddleware, store);
+router.post(
+  "/",
+  body("first_name").notEmpty().withMessage("نام نمیتواند خالی باشد").isString().withMessage("نام باید از نوع رشته باشد"),
+  body("last_name").notEmpty().withMessage("نام خانوادگی نمیتواند خالی باشد").isString().withMessage("نام خانوادگی باید از نوع رشته باشد"),
+  body("username").notEmpty().withMessage("نام کاربری نمیتواند خالی باشد").isString().withMessage("نام کاربری باید از نوع رشته باشد"),
+  body("password").notEmpty().withMessage("کلمه عبور نمیتواند خالی باشد").isString().withMessage("کلمه عبور باید از نوع رشته باشد"),
+  authMiddleware,
+  store
+);
 
 /**
  * @swagger
@@ -145,7 +165,15 @@ router.get("/:id", authMiddleware, show);
  *       200:
  *         description: پاسخ موفق
  */
-router.put("/:id", authMiddleware, update);
+router.put(
+  "/:id",
+  body("first_name").optional().isString().withMessage("نام باید از نوع رشته باشد"),
+  body("last_name").optional().isString().withMessage("نام خانوادگی باید از نوع رشته باشد"),
+  body("username").optional().isString().withMessage("نام کاربری باید از نوع رشته باشد"),
+  body("password").optional().isString().withMessage("کلمه عبور باید از نوع رشته باشد"),
+  authMiddleware,
+  update
+);
 
 /**
  * @swagger
