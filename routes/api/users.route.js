@@ -6,10 +6,28 @@ const {
   show,
   destroy,
 } = require("../../controllers/user.controller");
-
-const { body } = require("express-validator");
+const mongoose = require("mongoose");
+const { body, param } = require("express-validator");
 
 const authMiddleware = require("../../middlewares/auth.middleware");
+const User = require('../../models/user.model');
+
+const idValidator = param("id")
+  .custom((value) => {
+    if(!mongoose.Types.ObjectId.isValid(value))
+      return Promise.reject("شناسه اشتباه است");
+    return true;
+  });
+
+const createUsernameUniqueValidator = body("username").custom((value) => {
+  return User.findOne({ username: value }).then((user) => {
+    if (user) {
+      return Promise.reject("نام کاربری قبلا استفاده شده است!");
+    }
+  });
+});
+
+
 /**
  * @swagger
  *
@@ -89,10 +107,27 @@ router.get("/", authMiddleware, index);
  */
 router.post(
   "/",
-  body("first_name").notEmpty().withMessage("نام نمیتواند خالی باشد").isString().withMessage("نام باید از نوع رشته باشد"),
-  body("last_name").notEmpty().withMessage("نام خانوادگی نمیتواند خالی باشد").isString().withMessage("نام خانوادگی باید از نوع رشته باشد"),
-  body("username").notEmpty().withMessage("نام کاربری نمیتواند خالی باشد").isString().withMessage("نام کاربری باید از نوع رشته باشد"),
-  body("password").notEmpty().withMessage("کلمه عبور نمیتواند خالی باشد").isString().withMessage("کلمه عبور باید از نوع رشته باشد"),
+  createUsernameUniqueValidator,
+  body("first_name")
+    .notEmpty()
+    .withMessage("نام نمیتواند خالی باشد")
+    .isString()
+    .withMessage("نام باید از نوع رشته باشد"),
+  body("last_name")
+    .notEmpty()
+    .withMessage("نام خانوادگی نمیتواند خالی باشد")
+    .isString()
+    .withMessage("نام خانوادگی باید از نوع رشته باشد"),
+  body("username")
+    .notEmpty()
+    .withMessage("نام کاربری نمیتواند خالی باشد")
+    .isString()
+    .withMessage("نام کاربری باید از نوع رشته باشد"),
+  body("password")
+    .notEmpty()
+    .withMessage("کلمه عبور نمیتواند خالی باشد")
+    .isString()
+    .withMessage("کلمه عبور باید از نوع رشته باشد"),
   authMiddleware,
   store
 );
@@ -121,7 +156,7 @@ router.post(
  *       200:
  *         description: پاسخ موفق
  */
-router.get("/:id", authMiddleware, show);
+router.get("/:id", idValidator, authMiddleware, show);
 
 /**
  * @swagger
@@ -167,10 +202,24 @@ router.get("/:id", authMiddleware, show);
  */
 router.put(
   "/:id",
-  body("first_name").optional().isString().withMessage("نام باید از نوع رشته باشد"),
-  body("last_name").optional().isString().withMessage("نام خانوادگی باید از نوع رشته باشد"),
-  body("username").optional().isString().withMessage("نام کاربری باید از نوع رشته باشد"),
-  body("password").optional().isString().withMessage("کلمه عبور باید از نوع رشته باشد"),
+  idValidator,
+  createUsernameUniqueValidator,
+  body("first_name")
+    .optional()
+    .isString()
+    .withMessage("نام باید از نوع رشته باشد"),
+  body("last_name")
+    .optional()
+    .isString()
+    .withMessage("نام خانوادگی باید از نوع رشته باشد"),
+  body("username")
+    .optional()
+    .isString()
+    .withMessage("نام کاربری باید از نوع رشته باشد"),
+  body("password")
+    .optional()
+    .isString()
+    .withMessage("کلمه عبور باید از نوع رشته باشد"),
   authMiddleware,
   update
 );
@@ -199,6 +248,6 @@ router.put(
  *       200:
  *         description: پاسخ موفق
  */
-router.delete("/:id", authMiddleware, destroy);
+router.delete("/:id", idValidator, authMiddleware, destroy);
 
 module.exports = router;

@@ -27,14 +27,20 @@ const store = async (req, res) => {
 };
 
 const show = async (req, res) => {
-  try {
-    const user = await User.findOne({ _id: req.params.id });
+  const result = validationResult(req);
 
-    if (user) return res.json(user);
-    return res.status(404).json({ error: "کاربر مورد نظر یافت نشد" });
-  } catch (error) {
-    res.status(500).json({ error: error });
+  if (result.isEmpty()) {
+    try {
+      const user = await User.findById(req.params.id);
+
+      if (user) return res.json(user);
+      return res.status(404).json({ error: "کاربر مورد نظر یافت نشد" });
+    } catch (error) {
+      res.status(500).json({ error: error });
+    }
   }
+
+  return res.status(422).json({ errors: result.array() });
 };
 
 const update = async (req, res) => {
@@ -58,12 +64,18 @@ const update = async (req, res) => {
 };
 
 const destroy = async (req, res) => {
-  try {
-    await User.deleteOne({ _id: req.params.id });
-    return res.json({ message: "!با موفقیت حذف شد!" });
-  } catch (error) {
-    res.status(500).json({ error: error });
+  const result = validationResult(req);
+
+  if (result.isEmpty()) {
+    try {
+      await User.deleteOne({ _id: req.params.id });
+      return res.json({ message: "!با موفقیت حذف شد!" });
+    } catch (error) {
+      res.status(500).json({ error: error });
+    }
   }
+
+  return res.status(422).json({ errors: result.array() });
 };
 
 module.exports = { index, store, show, update, destroy };
