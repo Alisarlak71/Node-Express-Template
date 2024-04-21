@@ -10,12 +10,13 @@
 <h2>Feature Lists :</h2>
 <ul>
   <li>Developed with Node.js and Express as web framework and use MongoDB as database</li>
-  <li>User CRUD</li>
+  <li>User CRUD with REST API</li>
   <li>Authenticate with JWT</li>
   <li>Auth Middleware</li>
   <li>Validations</li>
   <li>Error Handling</li>
   <li>Dockerized</li>
+  <li>Documented by swagger</li>
 </ul>
 
 <h2> Installation </h2>
@@ -39,4 +40,4 @@ body:
 }`
 
 <h2>Swagger documentaion: </h2>
-route : `/api-docs/`
+route : ` /api-docs `
