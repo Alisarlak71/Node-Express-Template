@@ -1,16 +1,17 @@
+const ExceptionHandler = require("../exceptions/handler.exception");
 const User = require("../models/user.model");
 const { validationResult } = require("express-validator");
 
-const index = async (req, res) => {
+const index = async (req, res, next) => {
   try {
     const users = await User.find();
     res.json(users);
   } catch (error) {
-    res.status(500).json({ error: error });
+    next(error);
   }
 };
 
-const store = async (req, res) => {
+const store = async (req, res, next) => {
   const result = validationResult(req);
 
   if (result.isEmpty()) {
@@ -19,14 +20,14 @@ const store = async (req, res) => {
       await user.save();
       return res.json({ message: "با موفقیت ثبت شد!" });
     } catch (error) {
-      res.status(500).json({ error: error });
+      next(error);
     }
   }
 
-  return res.status(422).json({ errors: result.array() });
+  next(new ExceptionHandler("خطای اعتبارسنجی", 422, result.array()));
 };
 
-const show = async (req, res) => {
+const show = async (req, res, next) => {
   const result = validationResult(req);
 
   if (result.isEmpty()) {
@@ -34,16 +35,17 @@ const show = async (req, res) => {
       const user = await User.findById(req.params.id);
 
       if (user) return res.json(user);
-      return res.status(404).json({ error: "کاربر مورد نظر یافت نشد" });
+
+      throw new ExceptionHandler("کاربر مورد نظر یافت نشد", 404);
     } catch (error) {
-      res.status(500).json({ error: error });
+      next(error);
     }
   }
 
-  return res.status(422).json({ errors: result.array() });
+  next(new ExceptionHandler("خطای اعتبارسنجی", 422, result.array()));
 };
 
-const update = async (req, res) => {
+const update = async (req, res, next) => {
   const result = validationResult(req);
 
   if (result.isEmpty()) {
@@ -52,18 +54,18 @@ const update = async (req, res) => {
       if (user) {
         await user.updateOne(req.body);
 
-        return res.json({ message: "!با موفقیت ثبت شد!" });
+        return res.json({ message: "!با موفقیت بروزرسانی شد!" });
       }
-      return res.status(404).json({ error: "کاربر مورد نظر یافت نشد" });
+      throw new ExceptionHandler("کاربر مورد نظر یافت نشد", 404);
     } catch (error) {
-      res.status(500).json({ error: error });
+      next(error);
     }
   }
 
-  return res.status(422).json({ errors: result.array() });
+  next(new ExceptionHandler("خطای اعتبارسنجی", 422, result.array()));
 };
 
-const destroy = async (req, res) => {
+const destroy = async (req, res, next) => {
   const result = validationResult(req);
 
   if (result.isEmpty()) {
@@ -71,11 +73,11 @@ const destroy = async (req, res) => {
       await User.deleteOne({ _id: req.params.id });
       return res.json({ message: "!با موفقیت حذف شد!" });
     } catch (error) {
-      res.status(500).json({ error: error });
+      next(error);
     }
   }
 
-  return res.status(422).json({ errors: result.array() });
+  next(new ExceptionHandler("خطای اعتبارسنجی", 422, result.array()));
 };
 
 module.exports = { index, store, show, update, destroy };
