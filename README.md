@@ -1,6 +1,5 @@
 سلام و وقت بخیر باتوجه به اینکه مشغول به کار هستم یک روز بیشتر نتونستم کار کنم موارد زیر باقی مونده که دارم انجام میدم :
 <ul>
-  <li>validation</li>
   <li> encrypt & decrypt password</li>
   <li> filters </li>
   <li> paginations </li>
