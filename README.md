@@ -1,9 +1,21 @@
-سلام و وقت بخیر باتوجه به اینکه مشغول به کار هستم یک روز بیشتر نتونستم کار کنم موارد زیر باقی مونده که دارم انجام میدم :
+<h2>To Do list : </h2>
 <ul>
   <li> encrypt & decrypt password</li>
   <li> filters </li>
   <li> paginations </li>
   <li> testing </li>
+</ul>
+
+<h2>Feature Lists :</h2>
+<ul>
+  <li>Developed with Node.js and Express as web framework and use MongoDB as database</li>
+  <li>User CRUD</li>
+  <li>Authenticate with JWT</li>
+  <li>Auth Middleware</li>
+  <li>Validations</li>
+  <li>Error Handling</li>
+  <li>Dockerized</li>
+  <li></li>
 </ul>
 
 <h2> Installation </h2>
