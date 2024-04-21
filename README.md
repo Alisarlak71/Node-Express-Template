@@ -1,7 +1,7 @@
 <h2>To Do list : </h2>
 <ul>
   <li> encrypt & decrypt password</li>
-  <li> filters </li>
+  <li> filters and sort </li>
   <li> paginations </li>
   <li> testing </li>
   <li> add services </li>
