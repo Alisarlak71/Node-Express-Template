@@ -1,3 +1,13 @@
+سلام و وقت بخیر باتوجه به اینکه مشغول به کار هستم یک روز بیشتر نتونستم کار کنم موارد زیر باقی مونده :
+<ul>
+  <li>validation</li>
+  <li> encrypt & decrypt password</li>
+  <li> filters </li>
+  <li> paginations </li>
+  <li> testing </li>
+  <li> error handling </li>
+</ul>
+
 <h2> Installation </h2>
   
 `cp .env.example .env`
