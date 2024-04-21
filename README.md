@@ -4,6 +4,7 @@
   <li> filters </li>
   <li> paginations </li>
   <li> testing </li>
+  <li> add services </li>
 </ul>
 
 <h2>Feature Lists :</h2>
@@ -15,7 +16,6 @@
   <li>Validations</li>
   <li>Error Handling</li>
   <li>Dockerized</li>
-  <li></li>
 </ul>
 
 <h2> Installation </h2>
