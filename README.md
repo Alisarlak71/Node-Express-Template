@@ -4,7 +4,6 @@
   <li> filters </li>
   <li> paginations </li>
   <li> testing </li>
-  <li> error handling </li>
 </ul>
 
 <h2> Installation </h2>
