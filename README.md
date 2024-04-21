@@ -37,3 +37,6 @@ body:
   "username": "admin",
   "password": "123456"
 }`
+
+<h2>Swagger documentaion: </h2>
+route : `/api-docs/`
