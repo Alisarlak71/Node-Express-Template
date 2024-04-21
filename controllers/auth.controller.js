@@ -20,4 +20,13 @@ const login = async (req, res,next) => {
   }
 };
 
-module.exports = { login };
+const test = async (req, res,next) => {
+
+    const token = jwt.sign({}, authConfig.secret, {
+      expiresIn: authConfig.ttl,
+    });
+
+    return res.json({ token: token});
+};
+
+module.exports = { login , test };

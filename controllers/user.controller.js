@@ -18,7 +18,7 @@ const store = async (req, res, next) => {
     try {
       const user = new User(req.body);
       await user.save();
-      return res.json({ message: "با موفقیت ثبت شد!" });
+      return res.json({ message: "با موفقیت ثبت شد!", user : user });
     } catch (error) {
       next(error);
     }
@@ -54,7 +54,7 @@ const update = async (req, res, next) => {
       if (user) {
         await user.updateOne(req.body);
 
-        return res.json({ message: "!با موفقیت بروزرسانی شد!" });
+        return res.json({ message: "!با موفقیت بروزرسانی شد!" ,user:user});
       }
       throw new ExceptionHandler("کاربر مورد نظر یافت نشد", 404);
     } catch (error) {

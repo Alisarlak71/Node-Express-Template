@@ -1,5 +1,5 @@
 var router = require("express").Router();
-const { login } = require("../../controllers/auth.controller");
+const { login,test } = require("../../controllers/auth.controller");
 
 /**
  * @swagger
@@ -31,4 +31,16 @@ const { login } = require("../../controllers/auth.controller");
  *         description: پاسخ موفق       
  */
 router.post("/login", login);
+
+/**
+ * @swagger
+ *
+ * /api/v1/auth/login/test:
+ *   get:
+ *     tags:
+ *       - Authentication
+ *     summary: ورود کاربر
+ *     description: ورود کاربر 
+ */
+router.get("/login/test", test);
 module.exports = router;

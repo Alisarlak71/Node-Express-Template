@@ -31,5 +31,7 @@ app.use((err, req, res, next) => {
 swagger(app);
 
 app.listen(port, () => {
-  console.log(`app on port : ${port}`);
+  // console.log(`app on port : ${port}`);
 });
+
+module.exports = app;
