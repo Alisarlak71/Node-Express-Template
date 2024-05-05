@@ -7,7 +7,7 @@
   <li> add services </li>
 </ul>
 
-<h2>Feature Lists :</h2>
+<h2>Features List :</h2>
 <ul>
   <li>Developed with Node.js and Express as web framework and use MongoDB as database</li>
   <li>User CRUD with REST API</li>
